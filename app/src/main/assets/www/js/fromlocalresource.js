@@ -28,6 +28,7 @@ userLocation: null,
 	// called to inject new POI data
 	loadPoisFromJsonData: function loadPoisFromJsonDataFn(poiData) {
 
+
 		// empty list of visible markers
 		World.markerList = [];
 
@@ -101,6 +102,26 @@ userLocation: null,
 		});
 	},
 
+showRange: function showRangeFn() {
+		if (World.markerList.length > 0) {
+
+			// update labels on every range movement
+			$('#panel-distance-range').change(function() {
+				World.updateRangeValues();
+			});
+
+			World.updateRangeValues();
+			World.handlePanelMovements();
+
+			// open panel
+			$("#panel-distance").trigger("updatelayout");
+			$("#panel-distance").panel("open", 1234);
+		} else {
+
+			// no places are visible, because the are not loaded yet
+			World.updateStatusMessage('No places available yet', true);
+		}
+	},
 	// location updates, fired every time you call architectView.setLocation() in native environment
 	// Note: You may set 'AR.context.onLocationChanged = null' to no longer receive location updates in World.locationChanged.
 	locationChanged: function locationChangedFn(lat, lon, alt, acc) {
@@ -163,13 +184,13 @@ updateRangeValues: function updateRangeValuesFn() {
 
     // range in meters including metric m/km
     var maxRangeValue = (maxRangeMeters > 999) ? ((maxRangeMeters / 1000).toFixed(2) + " km") : (Math.round(maxRangeMeters) + " m");
-alert(maxRangeValue);
+//alert(maxRangeValue);
     // number of places within max-range
     var placesInRange = World.getNumberOfVisiblePlacesInRange(maxRangeMeters);
 
     // update UI labels accordingly
     $("#panel-distance-value").html(maxRangeValue);
-    alert((placesInRange != 1) ? (placesInRange + " Places") : (placesInRange + " Place"));
+//    alert((placesInRange != 1) ? (placesInRange + " Places") : (placesInRange + " Place"));
 
     // update culling distance, so only places within given range are rendered
     AR.context.scene.cullingDistance = Math.max(maxRangeMeters, 1);
@@ -194,6 +215,21 @@ getNumberOfVisiblePlacesInRange: function getNumberOfVisiblePlacesInRangeFn(maxR
     // in case no placemark is out of range -> all are visible
     return World.markerList.length;
 },
+handlePanelMovements: function handlePanelMovementsFn() {
+
+		$("#panel-distance").on("panelclose", function(event, ui) {
+			$("#radarContainer").addClass("radarContainer_left");
+			$("#radarContainer").removeClass("radarContainer_right");
+
+		});
+
+		$("#panel-distance").on("panelopen", function(event, ui) {
+			$("#radarContainer").removeClass("radarContainer_left");
+			$("#radarContainer").addClass("radarContainer_right");
+
+		});
+	},
+
 	/*
 		JQuery provides a number of tools to load data from a remote origin.
 		It is highly recommended to use the JSON format for POI information. Requesting and parsing is done in a few lines of code.
@@ -212,6 +248,7 @@ getNumberOfVisiblePlacesInRange: function getNumberOfVisiblePlacesInRangeFn(maxR
 
 		// server-url to JSON content provider
 		var serverUrl = ServerInformation.POIDATA_SERVER + "?" + ServerInformation.POIDATA_SERVER_ARG_LAT + "=" + lat + "&" + ServerInformation.POIDATA_SERVER_ARG_LON + "=" + lon + "&" + ServerInformation.POIDATA_SERVER_ARG_NR_POIS + "=20";
+
 
 		var jqxhr = $.getJSON(serverUrl, function(data) {
 				World.loadPoisFromJsonData(data);
@@ -233,3 +270,4 @@ AR.context.onLocationChanged = World.locationChanged;
 
 /* forward clicks in empty area to World */
 AR.context.onScreenClick = World.onScreenClick;
+
