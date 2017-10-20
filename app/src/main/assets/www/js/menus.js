@@ -69,6 +69,7 @@ $("#loca").on("click", function(e){
                  console.log("pulsadorer");
 
 
+
         });
 
     });
