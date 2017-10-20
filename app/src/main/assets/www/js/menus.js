@@ -37,10 +37,12 @@ $(document).on('pageshow','#list-page', function() {
 
 
 $(document).on('pageshow','#detail-page', function(){
-    $('#info-imagen').attr("src", localizaciones[id].poiData.image);
+    $('#info-imagen2').attr("src", "http://www.uleam.edu.ec/wp-content/uploads/2017/09/slider-fechas-y-horarios-activacion-usuarios-matriculas-2017-2018-2.jpg");
+    $('#info-imagen2').css( "width", "+=225" );
     $('#info-nombre').html(localizaciones[id].poiData.title);
     $('#info-distancia').html((localizaciones[id].distanceToUser > 999) ? ((localizaciones[id].distanceToUser / 1000).toFixed(2) + " km") : (Math.round(localizaciones[id].distanceToUser) + " m"));
     $('#info-descripcion').html(localizaciones[id].poiData.description);
+
 });
 var a;
 function llamadaid(id){
@@ -53,19 +55,18 @@ $("#loca").on("click", function(e){
 
                 var myJsonData = [{
                     "id": a,
-                    "longitude": "-80.752779",
-                    "latitude": "-0.9625554",
+                    "longitude": localizaciones[a].poiData.longitude,
+                    "latitude": localizaciones[a].poiData.latitude,
                     "description": localizaciones[a].poiData.description,
                     "altitude": "100.0",
                     "name": localizaciones[a].poiData.id
                 }];
 
-               World.loadPoisFromJsonData(myJsonData);
-               World.isRequestingData = false;
-                  console.log(a);
-
+                 World.loadPoisFromJsonData(myJsonData);
+                 World.isRequestingData = false;
+                 console.log(a);
                  World.updateRangeValues();
-                                   console.log("pulsadorer");
+                 console.log("pulsadorer");
 
 
         });
