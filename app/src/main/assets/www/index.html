@@ -26,6 +26,7 @@
 
     <!--Css -->
         <link rel="stylesheet" href="css/materialize.min.css" />
+        <link rel="stylesheet" href="css/munes.css" />
 
         <!-- jquery JS files -->
     <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
@@ -44,7 +45,7 @@
     <div data-role="page" id="cam-page" style="background: none;" >
         <div class="radarContainer_left" id="radarContainer"></div>
         <div id ="header-status" data-role="header" data-position="fixed" data-theme="c">
-            <a href="javascript: World.showRange();" data-icon="gear" data-inline="true" data-mini="true">Range</a>
+
             <a href="javascript: World.reloadPlaces();" data-icon="refresh" >Reload</a>
             <h1></h1>
         </div>
@@ -60,6 +61,25 @@
 
             </ul>
         </div>
+        <div id="detail-viewer" class="row" style="bottom: +900px">
+            <div class="col s12 m7">
+                <div class="card">
+                    <div class="slider" >
+                        <ul id="miSlides" class="slides">
+                        </ul>
+                    </div>
+                    <span id="name" class="card-title"></span>
+                    <div class="card-content">
+                        <p id="distance"></p>
+                    </div>
+                    <div class="card-action">
+                        <a style="color:black;" href="#detail-page">MAS INFORMACION</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         <!-- range panel -->
         <div data-role="panel" id="panel-distance" data-position="left" data-display="overlay" style="background-color:#F0F0F0;" data-theme="c">
 
@@ -139,6 +159,7 @@
                 </div>
             </div>
         </div>
+
 
     </div>
     <script>

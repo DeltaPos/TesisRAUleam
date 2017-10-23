@@ -37,6 +37,7 @@ $(document).on('pageshow','#list-page', function() {
 
 
 $(document).on('pageshow','#detail-page', function(){
+  $("#detail-viewer").css("bottom","-400px");
     $('#info-imagen2').attr("src", "http://www.uleam.edu.ec/wp-content/uploads/2017/09/slider-fechas-y-horarios-activacion-usuarios-matriculas-2017-2018-2.jpg");
     $('#info-imagen2').css( "width", "+=225" );
     $('#info-nombre').html(localizaciones[id].poiData.title);
@@ -58,15 +59,19 @@ $("#loca").on("click", function(e){
                     "longitude": localizaciones[a].poiData.longitude,
                     "latitude": localizaciones[a].poiData.latitude,
                     "description": localizaciones[a].poiData.description,
+                    "title":"123456789011",
                     "altitude": "100.0",
                     "name": localizaciones[a].poiData.id
                 }];
 
                  World.loadPoisFromJsonData(myJsonData);
+
                  World.isRequestingData = false;
                  console.log(a);
                  World.updateRangeValues();
                  console.log("pulsadorer");
+                   // str = JSON.stringify(marker);
+                    //console.log(str);
 
 
 
@@ -80,4 +85,10 @@ $("#loca").on("click", function(e){
     AR.context.destroyAll();
 
     }
+    function  datos(marker){
+
+     console.log(marker);
+    }
+
+
 

@@ -34,7 +34,7 @@ function Marker(poiData) {
         onClick: null
     });
 
-    // create an AR.Label for the marker's title 
+    // create an AR.Label for the marker's title
     this.titleLabel = new AR.Label(poiData.title.trunc(10), 1, {
         zOrder: 1,
         translate: {
@@ -115,66 +115,50 @@ Marker.prototype.getOnClickTrigger = function(marker) {
  */
 
 Marker.prototype.setSelected = function(marker) {
+      //str = JSON.stringify(marker);
+     //alert(str);
 
-    marker.isSelected = true;
+marker.isSelected = true;
 
-    // New:
-    if (marker.animationGroup_selected === null) {
-
-        // create AR.PropertyAnimation that animates the opacity to 0.0 in order to hide the idle-state-drawable
-        var hideIdleDrawableAnimation = new AR.PropertyAnimation(marker.markerDrawable_idle, "opacity", null, 0.0, kMarker_AnimationDuration_ChangeDrawable);
-        // create AR.PropertyAnimation that animates the opacity to 1.0 in order to show the selected-state-drawable
-        var showSelectedDrawableAnimation = new AR.PropertyAnimation(marker.markerDrawable_selected, "opacity", null, 1.0, kMarker_AnimationDuration_ChangeDrawable);
-
-        // create AR.PropertyAnimation that animates the scaling of the idle-state-drawable to 1.2
-        var idleDrawableResizeAnimationX = new AR.PropertyAnimation(marker.markerDrawable_idle, 'scale.x', null, 1.2, kMarker_AnimationDuration_Resize, new AR.EasingCurve(AR.CONST.EASING_CURVE_TYPE.EASE_OUT_ELASTIC, {
-            amplitude: 2.0
-        }));
-        // create AR.PropertyAnimation that animates the scaling of the selected-state-drawable to 1.2
-        var selectedDrawableResizeAnimationX = new AR.PropertyAnimation(marker.markerDrawable_selected, 'scale.x', null, 1.2, kMarker_AnimationDuration_Resize, new AR.EasingCurve(AR.CONST.EASING_CURVE_TYPE.EASE_OUT_ELASTIC, {
-            amplitude: 2.0
-        }));
-        // create AR.PropertyAnimation that animates the scaling of the title label to 1.2
-        var titleLabelResizeAnimationX = new AR.PropertyAnimation(marker.titleLabel, 'scale.x', null, 1.2, kMarker_AnimationDuration_Resize, new AR.EasingCurve(AR.CONST.EASING_CURVE_TYPE.EASE_OUT_ELASTIC, {
-            amplitude: 2.0
-        }));
-        // create AR.PropertyAnimation that animates the scaling of the description label to 1.2
-        var descriptionLabelResizeAnimationX = new AR.PropertyAnimation(marker.descriptionLabel, 'scale.x', null, 1.2, kMarker_AnimationDuration_Resize, new AR.EasingCurve(AR.CONST.EASING_CURVE_TYPE.EASE_OUT_ELASTIC, {
-            amplitude: 2.0
-        }));
-
-        // create AR.PropertyAnimation that animates the scaling of the idle-state-drawable to 1.2
-        var idleDrawableResizeAnimationY = new AR.PropertyAnimation(marker.markerDrawable_idle, 'scale.y', null, 1.2, kMarker_AnimationDuration_Resize, new AR.EasingCurve(AR.CONST.EASING_CURVE_TYPE.EASE_OUT_ELASTIC, {
-            amplitude: 2.0
-        }));
-        // create AR.PropertyAnimation that animates the scaling of the selected-state-drawable to 1.2
-        var selectedDrawableResizeAnimationY = new AR.PropertyAnimation(marker.markerDrawable_selected, 'scale.y', null, 1.2, kMarker_AnimationDuration_Resize, new AR.EasingCurve(AR.CONST.EASING_CURVE_TYPE.EASE_OUT_ELASTIC, {
-            amplitude: 2.0
-        }));
-        // create AR.PropertyAnimation that animates the scaling of the title label to 1.2
-        var titleLabelResizeAnimationY = new AR.PropertyAnimation(marker.titleLabel, 'scale.y', null, 1.2, kMarker_AnimationDuration_Resize, new AR.EasingCurve(AR.CONST.EASING_CURVE_TYPE.EASE_OUT_ELASTIC, {
-            amplitude: 2.0
-        }));
-        // create AR.PropertyAnimation that animates the scaling of the description label to 1.2
-        var descriptionLabelResizeAnimationY = new AR.PropertyAnimation(marker.descriptionLabel, 'scale.y', null, 1.2, kMarker_AnimationDuration_Resize, new AR.EasingCurve(AR.CONST.EASING_CURVE_TYPE.EASE_OUT_ELASTIC, {
-            amplitude: 2.0
-        }));
-
-        /*
-         There are two types of AR.AnimationGroups. Parallel animations are running at the same time, sequentials are played one after another. This example uses a parallel AR.AnimationGroup.
-         */
-        marker.animationGroup_selected = new AR.AnimationGroup(AR.CONST.ANIMATION_GROUP_TYPE.PARALLEL, [hideIdleDrawableAnimation, showSelectedDrawableAnimation, idleDrawableResizeAnimationX, selectedDrawableResizeAnimationX, titleLabelResizeAnimationX, descriptionLabelResizeAnimationX, idleDrawableResizeAnimationY, selectedDrawableResizeAnimationY, titleLabelResizeAnimationY, descriptionLabelResizeAnimationY]);
-    }
-
-    // removes function that is set on the onClick trigger of the idle-state marker
+    marker.markerDrawable_idle.opacity = 0.0;
+    marker.markerDrawable_selected.opacity = 1.0;
     marker.markerDrawable_idle.onClick = null;
-    // sets the click trigger function for the selected state marker
     marker.markerDrawable_selected.onClick = Marker.prototype.getOnClickTrigger(marker);
 
-    // enables the direction indicator drawable for the current marker
-    marker.directionIndicatorDrawable.enabled = true;
-    // starts the selected-state animation
-    marker.animationGroup_selected.start();
+    // NOS DA LA DISTANCIA ENTRE NUESTRA POSICION Y EL MARKER
+    marker.distanceToUser = marker.markerObject.locations[0].distanceToUser();
+    // MOSTRAMOS UN DIV CON MÁS INFORMACION
+    document.getElementById("detail-viewer").style.bottom = "5px";
+    document.getElementById("name").innerHTML = marker.poiData.title;
+    document.getElementById("distance").innerHTML = (marker.distanceToUser > 999) ? ((marker.distanceToUser / 1000).toFixed(2) + " km") : (Math.round(marker.distanceToUser) + " m");
+    var numImages = parseInt(marker.poiData.numimages);
+    var carrusel = "";
+    for (i=1; i<=numImages; i++) {
+        carrusel = carrusel+"<li> <img style='height:200px;' src='"+marker.poiData.images+"/"+marker.poiData.id+i+".jpg'></li>";
+
+    }
+    document.getElementById("miSlides").innerHTML = carrusel;
+    $('.slider').slider();
+
+    for (i=0; i<localizaciones.length; i++){
+        if (localizaciones[i].poiData.id == marker.poiData.id){
+            id=i;
+            break;
+        }
+    }
+
+        // removes function that is set on the onClick trigger of the idle-state marker
+        //marker.markerDrawable_idle.onClick = null;
+        // sets the click trigger function for the selected state marker
+       // marker.markerDrawable_selected.onClick = Marker.prototype.getOnClickTrigger(marker);
+
+        // enables the direction indicator drawable for the current marker
+        marker.directionIndicatorDrawable.enabled = true;
+
+      //  marker.markerObject.drawables.radar = marker.radardrawablesSelected;
+
+        // starts the selected-state animation
+        //marker.animationGroup_selected.start();
 };
 
 Marker.prototype.setDeselected = function(marker) {
@@ -235,6 +219,9 @@ Marker.prototype.setDeselected = function(marker) {
     marker.directionIndicatorDrawable.enabled = false;
     // starts the idle-state animation
     marker.animationGroup_idle.start();
+  $("#detail-viewer").css("bottom","+900px");
+
+
 };
 
 Marker.prototype.isAnyAnimationRunning = function(marker) {

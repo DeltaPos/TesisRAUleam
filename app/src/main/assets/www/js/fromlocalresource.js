@@ -10,7 +10,7 @@ var ServerInformation = {
 var World = {
 	// you may request new data from server periodically, however: in this sample data is only requested once
 	isRequestingData: false,
-userLocation: null,
+    userLocation: null,
 	// true once data was fetched
 	initiallyLoadedData: false,
 
@@ -37,6 +37,7 @@ userLocation: null,
 		World.markerDrawable_selected = new AR.ImageResource("assets/marker_selected.png");
 		World.markerDrawable_directionIndicator = new AR.ImageResource("assets/indi.png");
 
+
 		// loop through POI-information and create an AR.GeoObject (=Marker) per POI
 		for (var currentPlaceNr = 0; currentPlaceNr < poiData.length; currentPlaceNr++) {
 			var singlePoi = {
@@ -48,19 +49,21 @@ userLocation: null,
 				"description": poiData[currentPlaceNr].description
 			};
 
+
 			World.markerList.push(new Marker(singlePoi));
+            //datos(Marker(singlePoi));
+
 		}
- World.updateDistanceToUserValues();
+        World.updateDistanceToUserValues();
 		World.updateStatusMessage(currentPlaceNr + ' places loaded');
 	},
 	 // sets/updates distances of all makers so they are available way faster than calling (time-consuming) distanceToUser() method all the time
-    	updateDistanceToUserValues: function updateDistanceToUserValuesFn() {
+    updateDistanceToUserValues: function updateDistanceToUserValuesFn() {
     		for (var i = 0; i < World.markerList.length; i++) {
     			World.markerList[i].distanceToUser = World.markerList[i].markerObject.locations[0].distanceToUser();
     		}
     	},
-
-// updates status message shown in small "i"-button aligned bottom center
+    // updates status message shown in small "i"-button aligned bottom center
 	updateStatusMessage: function updateStatusMessageFn(message, isWarning) {
 
 		var themeToUse = isWarning ? "e" : "c";
@@ -74,11 +77,13 @@ userLocation: null,
 			icon: iconToUse
 		});
 	},
-    	// reload places from content source
-        	reloadPlaces: function reloadPlacesFn() {
+    // reload places from content source
+    reloadPlaces: function reloadPlacesFn() {
         		if (!World.isRequestingData) {
         			if (World.userLocation) {
         				World.requestDataFromServer(World.userLocation.latitude, World.userLocation.longitude);
+
+
         			} else {
         				World.updateStatusMessage('Unknown user-location.', true);
         			}
@@ -102,7 +107,7 @@ userLocation: null,
 		});
 	},
 
-showRange: function showRangeFn() {
+    showRange: function showRangeFn() {
 		if (World.markerList.length > 0) {
 
 			// update labels on every range movement
@@ -152,7 +157,11 @@ World.userLocation = {
 
 		// highlight current one
 		marker.setSelected(marker);
+		//indicador(marker);
+		//alert(marker.poiData.id);
 		World.currentMarker = marker;
+
+
 	},
 
 	// screen was clicked but no geo-object was hit
@@ -163,7 +172,7 @@ World.userLocation = {
 		World.currentMarker = null;
 	},
 	// returns distance in meters of placemark with maxdistance * 1.1
-    	getMaxDistance: function getMaxDistanceFn() {
+    getMaxDistance: function getMaxDistanceFn() {
 
     		// sort places by distance so the first entry is the one with the maximum distance
     		World.markerList.sort(World.sortByDistanceSortingDescending);
@@ -174,7 +183,7 @@ World.userLocation = {
     		// return maximum distance times some factor >1.0 so ther is some room left and small movements of user don't cause places far away to disappear
     		return maxDistanceMeters * 1.1;
     	},
-updateRangeValues: function updateRangeValuesFn() {
+    updateRangeValues: function updateRangeValuesFn() {
 
     // get current slider value (0..100);
     var slider_value =100;
@@ -241,6 +250,7 @@ handlePanelMovements: function handlePanelMovementsFn() {
 	*/
 	// request POI data
 	requestDataFromServer: function requestDataFromServerFn(lat, lon) {
+	 AR.context.destroyAll();
 
 		// set helper var to avoid requesting places while loading
 		World.isRequestingData = true;
