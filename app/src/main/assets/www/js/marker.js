@@ -115,7 +115,7 @@ Marker.prototype.getOnClickTrigger = function(marker) {
  */
 
 Marker.prototype.setSelected = function(marker) {
-      //str = JSON.stringify(marker);
+     //str = JSON.stringify(marker);
      //alert(str);
 
 marker.isSelected = true;
@@ -131,6 +131,8 @@ marker.isSelected = true;
     document.getElementById("detail-viewer").style.bottom = "5px";
     document.getElementById("name").innerHTML = marker.poiData.title;
     document.getElementById("distance").innerHTML = (marker.distanceToUser > 999) ? ((marker.distanceToUser / 1000).toFixed(2) + " km") : (Math.round(marker.distanceToUser) + " m");
+    var oor=(marker.distanceToUser > 999) ? ((marker.distanceToUser / 1000).toFixed(2) + " km") : (Math.round(marker.distanceToUser) + " m");
+    hola(marker.poiData.id);
     var numImages = parseInt(marker.poiData.numimages);
     var carrusel = "";
     for (i=1; i<=numImages; i++) {
@@ -148,9 +150,9 @@ marker.isSelected = true;
     }
 
         // removes function that is set on the onClick trigger of the idle-state marker
-        //marker.markerDrawable_idle.onClick = null;
+        marker.markerDrawable_idle.onClick = null;
         // sets the click trigger function for the selected state marker
-       // marker.markerDrawable_selected.onClick = Marker.prototype.getOnClickTrigger(marker);
+        marker.markerDrawable_selected.onClick = Marker.prototype.getOnClickTrigger(marker);
 
         // enables the direction indicator drawable for the current marker
         marker.directionIndicatorDrawable.enabled = true;
@@ -219,6 +221,7 @@ Marker.prototype.setDeselected = function(marker) {
     marker.directionIndicatorDrawable.enabled = false;
     // starts the idle-state animation
     marker.animationGroup_idle.start();
+    myStopFunction();
   $("#detail-viewer").css("bottom","+900px");
 
 
@@ -241,3 +244,4 @@ Marker.prototype.isAnyAnimationRunning = function(marker) {
 String.prototype.trunc = function(n) {
     return this.substr(0, n - 1) + (this.length > n ? '...' : '');
 };
+

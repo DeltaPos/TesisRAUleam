@@ -37,6 +37,9 @@
 
     <!-- World logic-->
     <script type="text/javascript" src="js/fromlocalresource.js"></script>
+        <!-- Google maps -->
+        <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAZ3NcmyqFIsc2pMw_4npymf9JaG6u3vP4"></script>
+
 
         <script src="js/materialize.min.js"></script>
 </head>
@@ -44,7 +47,7 @@
     <body >
     <div data-role="page" id="cam-page" style="background: none;" >
         <div class="radarContainer_left" id="radarContainer"></div>
-        <div id ="header-status" data-role="header" data-position="fixed" data-theme="c">
+        <div id ="header-status" data-role="header" data-position="fixed" data-theme="c" style="width: 2px;">
 
             <a href="javascript: World.reloadPlaces();" data-icon="refresh" >Reload</a>
             <h1></h1>
@@ -73,7 +76,10 @@
                         <p id="distance"></p>
                     </div>
                     <div class="card-action">
-                        <a style="color:black;" href="#detail-page">MAS INFORMACION</a>
+                        <input type="text" id="idk" value="">
+                        <a style="color:black;" id="" href="#detail-page">MAS INFORMACION</a>
+                        <a style="color:black;" href="" id="ocultar" >Ocultar Info</a>
+
                     </div>
                 </div>
             </div>
@@ -139,7 +145,7 @@
                 <div class="card-panel white">
                     <div class="section map-section">
                         <div id="map-canvas2" style="height:200px; padding:0;">
-                            <img id="info-imagen2" src='' alt='' class=''>
+
 
                         </div>
                     </div>

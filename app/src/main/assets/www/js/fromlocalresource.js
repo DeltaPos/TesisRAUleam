@@ -1,6 +1,6 @@
 // information about server communication. This sample webservice is provided by Wikitude and returns random dummy places near given location
 var ServerInformation = {
-	POIDATA_SERVER: "https://example.wikitude.com/GetSamplePois/",
+	POIDATA_SERVER: "http://192.168.43.171/WebServerPOI/POI/",
 	POIDATA_SERVER_ARG_LAT: "lat",
 	POIDATA_SERVER_ARG_LON: "lon",
 	POIDATA_SERVER_ARG_NR_POIS: "nrPois"
@@ -51,12 +51,13 @@ var World = {
 
 
 			World.markerList.push(new Marker(singlePoi));
-            //datos(Marker(singlePoi));
+
 
 		}
         World.updateDistanceToUserValues();
 		World.updateStatusMessage(currentPlaceNr + ' places loaded');
 	},
+
 	 // sets/updates distances of all makers so they are available way faster than calling (time-consuming) distanceToUser() method all the time
     updateDistanceToUserValues: function updateDistanceToUserValuesFn() {
     		for (var i = 0; i < World.markerList.length; i++) {
@@ -92,20 +93,6 @@ var World = {
         		}
         	},
 
-	// updates status message shown in small "i"-button aligned bottom center
-	updateStatusMessage: function updateStatusMessageFn(message, isWarning) {
-
-		var themeToUse = isWarning ? "e" : "c";
-		var iconToUse = isWarning ? "alert" : "info";
-
-		$("#status-message").html(message);
-		$("#popupInfoButton").buttonMarkup({
-			theme: themeToUse
-		});
-		$("#popupInfoButton").buttonMarkup({
-			icon: iconToUse
-		});
-	},
 
     showRange: function showRangeFn() {
 		if (World.markerList.length > 0) {
@@ -257,7 +244,7 @@ handlePanelMovements: function handlePanelMovementsFn() {
 		World.updateStatusMessage('Requesting places from web-service');
 
 		// server-url to JSON content provider
-		var serverUrl = ServerInformation.POIDATA_SERVER + "?" + ServerInformation.POIDATA_SERVER_ARG_LAT + "=" + lat + "&" + ServerInformation.POIDATA_SERVER_ARG_LON + "=" + lon + "&" + ServerInformation.POIDATA_SERVER_ARG_NR_POIS + "=10";
+		var serverUrl = ServerInformation.POIDATA_SERVER;
 
 
 		var jqxhr = $.getJSON(serverUrl, function(data) {
