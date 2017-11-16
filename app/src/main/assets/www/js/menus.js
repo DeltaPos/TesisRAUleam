@@ -20,11 +20,9 @@ $(document).on('pageshow','#list-page', function() {
     localizaciones.forEach(function(element, index, array){
         var distancia = (element.distanceToUser > 999) ? ((element.distanceToUser / 1000).toFixed(2) + " km") : (Math.round(element.distanceToUser) + " m")
         lista = lista + "<li class='collection-item avatar materialize_esp'>\
-          <img src='"+element.poiData.image+"' alt='' class='circle'>\
-          <span class='title'>"+element.poiData.title+"</span>\
-          <span class='title'>"+element.poiData.latitude+"</span>\
-          <span class='title'>"+element.poiData.longitude+"</span>\
-          <p> <br>\
+          <img src='http://rauleam.000webhostapp.com/assets/img/User/"+element.poiData.image+"' alt='' class='circle'>\
+           <span class='title'>"+element.poiData.title+"</span><br>\
+           <p> <br>\
              "+distancia+"\
           </p>\
           <a href='#detail-page' onclick='llamadaid("+index+")' id='"+index+"' class='secondary-content' data-transition='slide'><i class='mdi-action-info-outline itp-list-link'></i></a>\
@@ -126,8 +124,8 @@ $(document).on('pageshow','#detail-page', function(){
   $("#detail-viewer").css("bottom","-400px");
   generaMapaMini();
     getDirections();
-    $('#info-imagen2').attr("src", "http://www.uleam.edu.ec/wp-content/uploads/2017/09/slider-fechas-y-horarios-activacion-usuarios-matriculas-2017-2018-2.jpg");
-    $('#info-imagen2').css( "width", "+=225" );
+    //$('#info-imagen2').attr("src", "");
+    //$('#info-imagen2').css( "width", "+=225" );
     $('#info-nombre').html(localizaciones[id].poiData.title);
     $('#info-distancia').html((localizaciones[id].distanceToUser > 999) ? ((localizaciones[id].distanceToUser / 1000).toFixed(2) + " km") : (Math.round(localizaciones[id].distanceToUser) + " m"));
     $('#info-descripcion').html(localizaciones[id].poiData.description);
@@ -206,10 +204,11 @@ function myStopFunction(){
  clearTimeout(myVar);
 }
 
+ function ocultar(){
+ //alert("d");
+  $("#detail-viewer").css("bottom","+900px");
+  };
 
-$("#oculta").on("click", function(e){
-  $("#detail-viewer").css("bottom","-400px");
-}
 
 
 

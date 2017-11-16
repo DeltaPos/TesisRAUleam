@@ -32,10 +32,11 @@
     <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
     <script type="text/javascript" src="jquery/jquery.mobile-1.3.2.min.js"></script>
 
-    <!-- marker representation-->
-    <script type="text/javascript" src="js/marker.js"></script>    
-
-    <!-- World logic-->
+        <!-- marker representation-->
+        <script type="text/javascript" src=" http://localhost/WebServerPOI/assets/global/plugins/jquery.min.js"></script>
+        <!-- marker representation-->
+        <script type="text/javascript" src="js/marker.js"></script>
+        <!-- World logic-->
     <script type="text/javascript" src="js/fromlocalresource.js"></script>
         <!-- Google maps -->
         <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAZ3NcmyqFIsc2pMw_4npymf9JaG6u3vP4"></script>
@@ -65,10 +66,11 @@
             </ul>
         </div>
         <div id="detail-viewer" class="row" style="bottom: +900px">
-            <div class="col s12 m7">
+            <div class="col s12 m7" style="">
                 <div class="card">
-                    <div class="slider" >
-                        <ul id="miSlides" class="slides">
+                    <div class="slider"  style="    height: 98px !important;">
+                        <ul id="miSlides" class="slides" style="    height: 98px !important;">
+
                         </ul>
                     </div>
                     <span id="name" class="card-title"></span>
@@ -76,9 +78,8 @@
                         <p id="distance"></p>
                     </div>
                     <div class="card-action">
-                        <input type="text" id="idk" value="">
-                        <a style="color:black;" id="" href="#detail-page">MAS INFORMACION</a>
-                        <a style="color:black;" href="" id="ocultar" >Ocultar Info</a>
+                        <!--<a style="color:black;" id="" href="#detail-page">MAS INFORMACION</a>-->
+                        <button style="color:black;"  onclick="ocultar()" id="ocultar" >Ocultar Info</button>
 
                     </div>
                 </div>
@@ -128,7 +129,7 @@
             </ul>
         </div>
     </div>
-    <div data-role="page" id="detail-page" data-theme="b" style="background: none;">
+    <div data-role="page" id="detail-page" data-theme="b" style="background: none; text-align:center;"">
         <div data-role="header" data-theme="b" id="cerrar" data-position="fixed">
             <nav>
                 <div class="nav-wrapper brown darken-2">
@@ -156,10 +157,10 @@
                     <div class="divider"></div>
                     <div class="section" style="text-align:center;">
                         <a href="#cam-page" id="loca"  class="waves-effect waves-light btn brown lighten-1"><i class="mdi-maps-place left"></i>localizacion</a>
-                        <a class="waves-effect waves-light btn brown lighten-1"><i class="mdi-social-public left"></i>pagina del sitio</a>
                     </div>
                     <div class="divider"></div>
-                    <div class="section">
+                    <div class="section" style="height:200px">
+                        <p id ="info-nombre" ></p>
                         <p id ="info-descripcion" ></p>
                     </div>
                 </div>
@@ -168,11 +169,7 @@
 
 
     </div>
-    <script>
-
-</script>
     <script src="js/menus.js"></script>
-
 
     </body>
     
