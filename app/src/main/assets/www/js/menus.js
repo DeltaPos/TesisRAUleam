@@ -21,7 +21,7 @@ $(document).on('pageshow','#list-page', function() {
         var distancia = (element.distanceToUser > 999) ? ((element.distanceToUser / 1000).toFixed(2) + " km") : (Math.round(element.distanceToUser) + " m")
         lista = lista + "<li class='collection-item avatar materialize_esp'>\
           <img src='http://rauleam.000webhostapp.com/assets/img/User/"+element.poiData.image+"' alt='' class='circle'>\
-           <span class='title'>"+element.poiData.title+"</span><br>\
+           <span class='title'>"+element.poiData.titvle+"</span><br>\
            <p> <br>\
              "+distancia+"\
           </p>\
