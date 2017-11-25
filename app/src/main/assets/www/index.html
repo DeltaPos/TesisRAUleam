@@ -35,11 +35,13 @@
         <!-- marker representation-->
         <script type="text/javascript" src=" http://localhost/WebServerPOI/assets/global/plugins/jquery.min.js"></script>
         <!-- marker representation-->
-        <script type="text/javascript" src="js/marker.js"></script>
         <!-- World logic-->
-    <script type="text/javascript" src="js/fromlocalresource.js"></script>
         <!-- Google maps -->
         <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAZ3NcmyqFIsc2pMw_4npymf9JaG6u3vP4"></script>
+        <script type="text/javascript" src="js/marker.js"></script>
+        <script type="text/javascript" src="js/fromlocalresource.js"></script>
+
+
 
 
         <script src="js/materialize.min.js"></script>
@@ -77,9 +79,9 @@
                     <div class="card-content">
                         <p id="distance"></p>
                     </div>
-                    <div class="card-action">
+                    <div class="card-action" id="mapa12" style="overflow:scroll;">
                         <!--<a style="color:black;" id="" href="#detail-page">MAS INFORMACION</a>-->
-                        <button style="color:black;"  onclick="ocultar()" id="ocultar" >Ocultar Info</button>
+                       <!-- <button style="color:black;"  onclick="ocultar()" id="ocultar" >Ocultar Info</button>-->
 
                     </div>
                 </div>
@@ -142,7 +144,7 @@
             </nav>
         </div>
         <div class="row">
-            <div class="col s12 m5">
+            <div class="col s12 m5" style="overflow: scroll;">
                 <div class="card-panel white">
                     <div class="section map-section">
                         <div id="map-canvas2" style="height:200px; padding:0;">
@@ -151,18 +153,24 @@
                         </div>
                     </div>
                     <div class="divider"></div>
-                    <div class="section">
-                        <p id="info-distancia"></p>
+                    <div class="section" style="overflow: scroll;    height: 300px;">
+                        <p>Nombre:</p><p id ="info-nombre2" ></p>
+                        <div class="divider"></div>
+
+                        <p>Distancia:</p><p id="info-distancia"></p>
+                        <div class="divider"></div>
+                        <p>Descripción</p>
+                        <p id ="as" ></p>
+                        <div class="divider"></div>
+                        <a href="#cam-page" id="loca"  class="waves-effect waves-light btn brown lighten-1"><i class="mdi-maps-place left"></i>localizacion</a>
+
                     </div>
                     <div class="divider"></div>
                     <div class="section" style="text-align:center;">
-                        <a href="#cam-page" id="loca"  class="waves-effect waves-light btn brown lighten-1"><i class="mdi-maps-place left"></i>localizacion</a>
+                        <!--<a href="#cam-page" id="loca"  class="waves-effect waves-light btn brown lighten-1"><i class="mdi-maps-place left"></i>localizacion</a>-->
                     </div>
-                    <div class="divider"></div>
-                    <div class="section" style="height:200px">
-                        <p id ="info-nombre" ></p>
-                        <p id ="info-descripcion" ></p>
-                    </div>
+
+
                 </div>
             </div>
         </div>

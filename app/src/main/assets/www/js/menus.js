@@ -21,7 +21,7 @@ $(document).on('pageshow','#list-page', function() {
         var distancia = (element.distanceToUser > 999) ? ((element.distanceToUser / 1000).toFixed(2) + " km") : (Math.round(element.distanceToUser) + " m")
         lista = lista + "<li class='collection-item avatar materialize_esp'>\
           <img src='http://rauleam.000webhostapp.com/assets/img/User/"+element.poiData.image+"' alt='' class='circle'>\
-           <span class='title'>"+element.poiData.titvle+"</span><br>\
+           <span class='title'>"+element.poiData.title+"</span><br>\
            <p> <br>\
              "+distancia+"\
           </p>\
@@ -124,11 +124,17 @@ $(document).on('pageshow','#detail-page', function(){
   $("#detail-viewer").css("bottom","-400px");
   generaMapaMini();
     getDirections();
-    //$('#info-imagen2').attr("src", "");
+    $('#info-imagen').attr("src", "http://rauleam.000webhostapp.com/assets/img/User/"+localizaciones[id].poiData.image+"");
     //$('#info-imagen2').css( "width", "+=225" );
+
     $('#info-nombre').html(localizaciones[id].poiData.title);
+    $('#info-nombre2').html(localizaciones[id].poiData.title);
     $('#info-distancia').html((localizaciones[id].distanceToUser > 999) ? ((localizaciones[id].distanceToUser / 1000).toFixed(2) + " km") : (Math.round(localizaciones[id].distanceToUser) + " m"));
-    $('#info-descripcion').html(localizaciones[id].poiData.description);
+    $('#as').html(localizaciones[id].poiData.description);
+     //$("#as").css("height","400px");
+
+
+
 
 });
 var a;
@@ -147,10 +153,17 @@ $("#loca").on("click", function(e){
                     "longitude": localizaciones[a].poiData.longitude,
                     "latitude": localizaciones[a].poiData.latitude,
                     "description": localizaciones[a].poiData.description,
-                    "title":"22222222",
                     "altitude": "100.0",
-                    "name": localizaciones[a].poiData.title
+                    "title": localizaciones[a].poiData.title,
+                    "name": localizaciones[a].poiData.title,
+                    "imagen2": localizaciones[a].poiData.imagen2,
+                    "image": localizaciones[a].poiData.imagen,
+                    "numimages": localizaciones[a].poiData.numimages,
+                    "web":localizaciones[a].poiData.web
+
                 }];
+                //console.log(localizaciones[a].poiData.title);
+
 
                  World.loadPoisFromJsonData(myJsonData);
 
@@ -176,28 +189,30 @@ $("#loca").on("click", function(e){
     }
  var myVar;
 function hola(id){
-    var id2=id;
+    var id2=id-1;
     World.updateDistanceToUserValues();
     localizaciones = World.markerList;
     str = JSON.stringify(localizaciones);
-         //alert(str);
-    console.log(localizaciones);
-    console.log(id2);
+     console.log(str);
+    //console.log(localizaciones);
+    //console.log(id2);
 
 
-    if(id2>=0){
+    if(id2>0){
     $("#distance").html((localizaciones[id2].distanceToUser > 999) ? ((localizaciones[id2].distanceToUser / 1000).toFixed(2) + " km") : (Math.round(localizaciones[id2].distanceToUser) + " m"));
-    console.log(localizaciones[id2].distanceToUser);
-      myVar=setTimeout('hola(id)',5000);
+    console.log(localizaciones[id2].distanceToUser+" "+localizaciones[id2].poiData.title);
+//direccion(localizaciones[id2].poiData.latitude,localizaciones[id2].poiData.longitude);
+      myVar=setTimeout('hola(id+1)',1000);
     }else{
     $("#distance").html((localizaciones[0].distanceToUser > 999) ? ((localizaciones[0].distanceToUser / 1000).toFixed(2) + " km") : (Math.round(localizaciones[0].distanceToUser) + " m"));
-    consele.log((localizaciones[0].distanceToUser > 999) ? ((localizaciones[0].distanceToUser / 1000).toFixed(2) + " km") : (Math.round(localizaciones[0].distanceToUser) + " m"));
-
-       myVar=setTimeout('hola(id)',5000);
+    console.log((localizaciones[0].distanceToUser > 999) ? ((localizaciones[0].distanceToUser / 1000).toFixed(2) + " km") : (Math.round(localizaciones[0].distanceToUser) + " m"));
+//direccion(localizaciones[0].poiData.latitude,localizaciones[0].poiData.longitude);
+       myVar=setTimeout('hola(id+1)',1000);
     }
 
 
 }
+
 
 function myStopFunction(){
 

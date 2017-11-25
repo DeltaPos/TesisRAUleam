@@ -18,27 +18,32 @@ function Marker(poiData) {
     var markerLocation = new AR.GeoLocation(poiData.latitude, poiData.longitude, poiData.altitude);
 
     // create an AR.ImageDrawable for the marker in idle state
-    this.markerDrawable_idle = new AR.ImageDrawable(World.markerDrawable_idle, 2.5, {
+    this.markerDrawable_idle = new AR.ImageDrawable(World.markerDrawable_idle, 4, {
         zOrder: 0,
         opacity: 1.0,
+
+
         /*
          To react on user interaction, an onClick property can be set for each AR.Drawable. The property is a function which will be called each time the user taps on the drawable. The function called on each tap is returned from the following helper function defined in marker.js. The function returns a function which checks the selected state with the help of the variable isSelected and executes the appropriate function. The clicked marker is passed as an argument.
          */
         onClick: Marker.prototype.getOnClickTrigger(this)
+
     });
 
     // create an AR.ImageDrawable for the marker in selected state
     this.markerDrawable_selected = new AR.ImageDrawable(World.markerDrawable_selected, 2.5, {
         zOrder: 0,
+        rotate : { z: 190 },
         opacity: 0.0,
-        onClick: null
+        onClick: function() {  this.rotate.z += 10;  }
     });
 
     // create an AR.Label for the marker's title
     this.titleLabel = new AR.Label(poiData.title.trunc(10), 1, {
         zOrder: 1,
         translate: {
-            y: 0.55
+            x: 0.01,
+            y: -0.30
         },
         style: {
             textColor: '#FFFFFF',
@@ -47,10 +52,11 @@ function Marker(poiData) {
     });
 
     // create an AR.Label for the marker's description
+
     this.descriptionLabel = new AR.Label(poiData.description.trunc(15), 0.8, {
         zOrder: 1,
         translate: {
-            y: -0.55
+            y: -0.95
         },
         style: {
             textColor: '#FFFFFF'
@@ -148,6 +154,7 @@ marker.isSelected = true;
 
     document.getElementById("miSlides").innerHTML = carrusel;
     $('.slider').slider();
+
 
     for (i=0; i<localizaciones.length; i++){
         if (localizaciones[i].poiData.id == marker.poiData.id){
